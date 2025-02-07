@@ -1,0 +1,38 @@
+<div class="container">
+    <h2>Instagram Followers Analysis</h2>
+  
+    <!-- Upload Sections -->
+    <div class="upload-section">
+      <label class="upload-label">Upload Followers JSON:</label>
+      <input type="file" (change)="onFileSelected($event, 'followers')" accept=".json" class="file-input" />
+  
+      <label class="upload-label">Upload Following JSON:</label>
+      <input type="file" (change)="onFileSelected($event, 'following')" accept=".json" class="file-input" />
+    </div>
+  
+    <!-- Show Button Only If Both Files Are Uploaded -->
+    <button (click)="calculateResults()" [disabled]="!followersData || !followingData" class="calculate-btn">
+      Analyze Data
+    </button>
+  
+    <!-- Loader -->
+    <div *ngIf="loading" class="loader-container">
+      <div class="loader"></div>
+      <p>Processing data, please wait...</p>
+    </div>
+  
+    <!-- Display Results -->
+    <div *ngIf="resultReady" class="result-section">
+      <h3>Analysis Results</h3>
+      <div class="result-box">
+        <p><strong>Total Following:</strong> {{ totalFollowing }}</p>
+        <p><strong>Total Followers:</strong> {{ totalFollowers }}</p>
+        <p><strong>Not Follow You Back:</strong> {{ notFollowingBack.length }}</p>
+      </div>
+  
+      <h4>Users Not Follow You Back</h4>
+      <ul class="user-list">
+        <li *ngFor="let user of notFollowingBack; let i = index"><b>{{i+1}} - </b>{{ user }}</li>
+      </ul>
+    </div>
+  </div>
